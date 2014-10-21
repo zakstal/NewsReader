@@ -1,6 +1,19 @@
 
 <ul>
 <% collection.each(function(feed) { %>
-    <li><a href="#/feeds/<%= feed.id %>"><%= feed.escape("title") %></li>
+    <li><a href="#/feeds/<%= feed.id %>"><%= feed.escape("title") %></a>  <button class="delete" data-id="<%= feed.escape("id") %>">Delete Feed</button></li>
 <% }); %>
 </ul>
+<br>
+<form class="new-feed">
+  <label>
+    Title
+  <input type="text" name="feed[title]" class="feed-title">
+  </label>
+  <label>
+    Url
+  <input type="text" name="feed[url]" class="feed-url">
+  </label>
+  <br>
+  <button class="add-feed">Add Feed</button>
+</form>

@@ -1,5 +1,6 @@
 NewsReader.Views.FeedShow = Backbone.View.extend({
   template: JST["show"],
+  tagName: 'ul',
 
   events: {
     "click .refresh": "refresh"
@@ -10,11 +11,13 @@ NewsReader.Views.FeedShow = Backbone.View.extend({
   },
 
   render: function() {
-    var renderedContent = this.template({
-      entries: this.model.entries()
-    });
+    var renderedContent = this.template();
     this.$el.html(renderedContent);
-    console.log("rendering..")
+    var that = this;
+    this.model.entries().each(function (entry) {
+      var view = new NewsReader.Views.Entry({ model: entry });
+      that.$el.append(view.render().$el);
+    });
     return this;
   },
 
@@ -22,8 +25,6 @@ NewsReader.Views.FeedShow = Backbone.View.extend({
   refresh: function(event) {
     event.preventDefault();
     this.model.entries().fetch();
-    console.log(this.model.entries().last());
-    console.log("you hit refresh");
   }
 
 });
